@@ -10,19 +10,11 @@
     <name>jetty-noxml</name>
     <description></description>
 
-    <repositories>
-        <repository>
-            <id>springsource-repo</id>
-            <name>SpringSource Repository</name>
-            <url>http://repo.springsource.org/release</url>
-        </repository>
-    </repositories>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jetty.version>8.1.9.v20130131</jetty.version>
         <jetty.jsp.version>8.1.4.v20120524</jetty.jsp.version>
-        <spring.version>3.1.2.RELEASE</spring.version>
+        <spring.version>4.0.3.RELEASE</spring.version>
     </properties>
 
     <build>
