@@ -8,7 +8,13 @@ public class Main {
     private WebServer server;
 
     public Main() {
-        server = new WebServer(WebServerConfig.Factory.newDevelopmentConfig("server", 8000, "localhost"));
+        String webPort = System.getenv("PORT");
+
+        if(webPort == null || webPort.isEmpty()) {
+            webPort = "8080";
+        }
+
+        server = new WebServer(WebServerConfig.Factory.newDevelopmentConfig("server", Integer.parseInt(webPort), "localhost"));
     }
 
     public void start() throws Exception {

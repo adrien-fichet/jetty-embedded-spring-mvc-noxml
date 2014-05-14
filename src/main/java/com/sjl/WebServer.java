@@ -61,7 +61,7 @@ public class WebServer {
     private ServerConnector createConnector(Server server) {
         ServerConnector _connector = new ServerConnector(server);
         _connector.setPort(config.getPort());
-        _connector.setHost(config.getHostInterface());
+        //_connector.setHost(config.getHostInterface());
         return _connector;
     }
 
