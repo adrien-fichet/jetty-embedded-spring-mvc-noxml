@@ -67,7 +67,7 @@ public class WebServer {
 
     private HandlerCollection createHandlers() throws IOException {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("/*");
+        context.setConfigLocation("com.sjl");
 
         WebAppContext contextHandler = new WebAppContext();
         contextHandler.setErrorHandler(null);
