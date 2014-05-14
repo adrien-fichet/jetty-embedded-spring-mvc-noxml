@@ -12,8 +12,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- <jetty.version>9.1.5.v20140505</jetty.version> -->
         <jetty.version>8.1.9.v20130131</jetty.version>
-        <jetty.jsp.version>8.1.4.v20120524</jetty.jsp.version>
         <spring.version>4.0.3.RELEASE</spring.version>
     </properties>
 
@@ -163,7 +163,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-jsp</artifactId>
-            <version>${jetty.jsp.version}</version>
+            <version>${jetty.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
