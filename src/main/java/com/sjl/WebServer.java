@@ -1,20 +1,20 @@
 package com.sjl;
 
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.NCSARequestLog;
-import org.eclipse.jetty.server.RequestLog;
-import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
-import org.eclipse.jetty.util.resource.Resource;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ThreadPool;
-import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +35,10 @@ public class WebServer {
     }
 
     public void start() throws Exception {
-        server = new Server();
-        server.setThreadPool(createThreadPool());
+        server = new Server(createThreadPool());
         server.addConnector(createConnector(server));
         server.setHandler(createHandlers());
         server.setStopAtShutdown(true);
-
         server.start();
     }
 
@@ -60,22 +58,26 @@ public class WebServer {
         return _threadPool;
     }
 
-    private SelectChannelConnector createConnector(Server server) {
-        SelectChannelConnector _connector = new SelectChannelConnector();
+    private ServerConnector createConnector(Server server) {
+        ServerConnector _connector = new ServerConnector(server);
         _connector.setPort(config.getPort());
         _connector.setHost(config.getHostInterface());
         return _connector;
     }
 
-    private HandlerCollection createHandlers() {
-        WebAppContext _ctx = new WebAppContext();
-        _ctx.setContextPath("/");
-        _ctx.setBaseResource(Resource.newClassPathResource("META-INF/webapp"));
+    private HandlerCollection createHandlers() throws IOException {
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.setConfigLocation("/*");
 
-        _ctx.setConfigurations(new Configuration[]{ new WebServerAnnotationConfiguration() });
+        WebAppContext contextHandler = new WebAppContext();
+        contextHandler.setErrorHandler(null);
+        contextHandler.setContextPath("/");
+        contextHandler.addServlet(new ServletHolder(new DispatcherServlet(context)), "/");
+        contextHandler.addEventListener(new ContextLoaderListener(context));
+        contextHandler.setResourceBase(new ClassPathResource("META-INF/webapp").getURI().toString());
 
         List<Handler> _handlers = new ArrayList<Handler>();
-        _handlers.add(_ctx);
+        _handlers.add(contextHandler);
 
         HandlerList _contexts = new HandlerList();
         _contexts.setHandlers(_handlers.toArray(new Handler[0]));
