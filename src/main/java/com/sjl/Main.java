@@ -8,7 +8,7 @@ public class Main {
     private WebServer server;
 
     public Main() {
-        server = new WebServer(WebServerConfig.Factory.newDevelopmentConfig("server", 80, "localhost"));
+        server = new WebServer(WebServerConfig.Factory.newDevelopmentConfig("server", 8000, "localhost"));
     }
 
     public void start() throws Exception {
