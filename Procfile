@@ -1,1 +1,1 @@
-web:    java -cp target/classes:target/dependency/* com.sjl.Main
+web:    java -jar target/jetty-noxml-1.0-SNAPSHOT.jar
