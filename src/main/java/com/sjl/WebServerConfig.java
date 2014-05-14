@@ -65,7 +65,7 @@ public interface WebServerConfig {
 
             @Override
             public String getAccessLogDirectory() {
-                return String.format("./var/logs/$s/", name);
+                return String.format("./var/logs/%s/", name);
             }
         }
 
